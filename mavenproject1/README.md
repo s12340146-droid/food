@@ -1,4 +1,4 @@
-A JavaFX and MySQL based cinema management system.
+A JavaFX and MySQL based food management system.
 
 ## Requirements
 - JDK 17
