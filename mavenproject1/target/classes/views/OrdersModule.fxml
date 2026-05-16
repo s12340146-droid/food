@@ -1,0 +1,1220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.OrdersModuleController"
+           prefWidth="1200"
+           prefHeight="750"
+           stylesheets="@../styles/customers-module.css">
+
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <AnchorPane style="-fx-background-color: rgba(0,0,0,0.48);" />
+
+    <BorderPane prefWidth="1200"
+                prefHeight="750"
+                style="-fx-padding: 22;">
+
+        <top>
+            <HBox alignment="CENTER_LEFT"
+                  spacing="16"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.15);
+                    -fx-background-radius: 22;
+                    -fx-padding: 18 24 18 24;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+                  ">
+
+                <VBox spacing="4">
+                    <Label text="Orders Management"
+                           style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Label text="Manage orders, order items, payments, deliveries, drivers, and discounts"
+                           style="-fx-font-size: 14px; -fx-text-fill: #fbe9e7;" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button text="Back"
+                        onAction="#backToDashboard"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="
+                            -fx-background-color: #fff3e0;
+                            -fx-text-fill: #e65100;
+                            -fx-font-size: 14px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+            </HBox>
+        </top>
+
+        <center>
+            <TabPane tabClosingPolicy="UNAVAILABLE"
+                     style="-fx-padding: 22 0 0 0; -fx-background-color: transparent;">
+
+                <!-- Orders Tab -->
+                <Tab text="🧾 Orders">
+                    <BorderPane style="
+                        -fx-background-color: rgba(255,255,255,0.94);
+                        -fx-background-radius: 20;
+                        -fx-padding: 20;
+                    ">
+
+                        <top>
+                            <VBox spacing="14">
+
+                                <Label text="Order Records"
+                                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <TextField fx:id="orderSearchField"
+                                               promptText="Search by customer, restaurant, status, or date"
+                                               prefWidth="470"
+                                               prefHeight="40"
+                                               style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                                    <Button text="Search"
+                                            onAction="#searchOrders"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                                    <Button text="Refresh"
+                                            onAction="#loadOrders"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                                </HBox>
+                            </VBox>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="ordersTable"
+                                       prefHeight="330"
+                                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+                                <columns>
+                                    <TableColumn fx:id="orderIdColumn"
+                                                 text="Order ID"
+                                                 prefWidth="90" />
+
+                                    <TableColumn fx:id="orderCustomerIdColumn"
+                                                 text="Customer ID"
+                                                 prefWidth="110" />
+
+                                    <TableColumn fx:id="orderCustomerNameColumn"
+                                                 text="Customer Name"
+                                                 prefWidth="180" />
+
+                                    <TableColumn fx:id="orderRestaurantIdColumn"
+                                                 text="Restaurant ID"
+                                                 prefWidth="120" />
+
+                                    <TableColumn fx:id="orderRestaurantNameColumn"
+                                                 text="Restaurant Name"
+                                                 prefWidth="190" />
+
+                                    <TableColumn fx:id="orderDateColumn"
+                                                 text="Order Date"
+                                                 prefWidth="180" />
+
+                                    <TableColumn fx:id="orderStatusColumn"
+                                                 text="Status"
+                                                 prefWidth="120" />
+
+                                    <TableColumn fx:id="orderTotalPriceColumn"
+                                                 text="Total Price"
+                                                 prefWidth="120" />
+                                </columns>
+                            </TableView>
+                        </center>
+
+                        <bottom>
+                            <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                                <GridPane hgap="14" vgap="12">
+
+                                    <Label text="Customer:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="orderCustomerComboBox"
+                                              promptText="Select customer"
+                                              prefWidth="260"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Restaurant:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="orderRestaurantComboBox"
+                                              promptText="Select restaurant"
+                                              prefWidth="260"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="3"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Status:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="orderStatusComboBox"
+                                              promptText="Select status"
+                                              prefWidth="260"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="1"
+                                              GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Total Price:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <TextField fx:id="orderTotalPriceField"
+                                               promptText="Total price"
+                                               prefWidth="260"
+                                               prefHeight="38"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="3"
+                                               style="-fx-background-radius: 12;" />
+                                </GridPane>
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <Button text="Add"
+                                            onAction="#addOrder"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Update"
+                                            onAction="#updateOrder"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Delete"
+                                            onAction="#deleteOrder"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Clear"
+                                            onAction="#clearOrderFields"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Label fx:id="orderMessageLabel"
+                                           wrapText="true"
+                                           maxWidth="450"
+                                           style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                </HBox>
+                            </VBox>
+                        </bottom>
+
+                    </BorderPane>
+                </Tab>
+
+                <!-- Order Items Tab -->
+                <Tab text="🍔 Order Items">
+                    <BorderPane style="
+                        -fx-background-color: rgba(255,255,255,0.94);
+                        -fx-background-radius: 20;
+                        -fx-padding: 20;
+                    ">
+
+                        <top>
+                            <VBox spacing="14">
+
+                                <Label text="Order Item Records"
+                                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <TextField fx:id="orderItemSearchField"
+                                               promptText="Search by order ID, item name, or restaurant"
+                                               prefWidth="470"
+                                               prefHeight="40"
+                                               style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                                    <Button text="Search"
+                                            onAction="#searchOrderItems"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                                    <Button text="Refresh"
+                                            onAction="#loadOrderItems"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                                </HBox>
+                            </VBox>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="orderItemsTable"
+                                       prefHeight="330"
+                                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+                                <columns>
+                                    <TableColumn fx:id="orderItemIdColumn"
+                                                 text="Order Item ID"
+                                                 prefWidth="130" />
+
+                                    <TableColumn fx:id="orderItemOrderIdColumn"
+                                                 text="Order ID"
+                                                 prefWidth="100" />
+
+                                    <TableColumn fx:id="orderItemItemIdColumn"
+                                                 text="Item ID"
+                                                 prefWidth="90" />
+
+                                    <TableColumn fx:id="orderItemNameColumn"
+                                                 text="Item Name"
+                                                 prefWidth="190" />
+
+                                    <TableColumn fx:id="orderItemRestaurantColumn"
+                                                 text="Restaurant"
+                                                 prefWidth="180" />
+
+                                    <TableColumn fx:id="orderItemQuantityColumn"
+                                                 text="Quantity"
+                                                 prefWidth="100" />
+
+                                    <TableColumn fx:id="orderItemPriceColumn"
+                                                 text="Item Price"
+                                                 prefWidth="110" />
+
+                                    <TableColumn fx:id="orderItemSubtotalColumn"
+                                                 text="Subtotal"
+                                                 prefWidth="120" />
+                                </columns>
+                            </TableView>
+                        </center>
+
+                        <bottom>
+                            <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                                <GridPane hgap="14" vgap="12">
+
+                                    <Label text="Order:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="orderItemOrderComboBox"
+                                              promptText="Select order"
+                                              prefWidth="300"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Menu Item:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="orderItemMenuItemComboBox"
+                                              promptText="Select menu item"
+                                              prefWidth="350"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="3"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Quantity:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <TextField fx:id="orderItemQuantityField"
+                                               promptText="Quantity"
+                                               prefWidth="300"
+                                               prefHeight="38"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="1"
+                                               style="-fx-background-radius: 12;" />
+
+                                    <Label text="Subtotal:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <TextField fx:id="orderItemSubtotalField"
+                                               promptText="Auto calculated"
+                                               editable="false"
+                                               prefWidth="350"
+                                               prefHeight="38"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="3"
+                                               style="-fx-background-radius: 12;" />
+                                </GridPane>
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <Button text="Calculate"
+                                            onAction="#calculateOrderItemSubtotal"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #5c6bc0; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Add"
+                                            onAction="#addOrderItem"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Update"
+                                            onAction="#updateOrderItem"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Delete"
+                                            onAction="#deleteOrderItem"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Clear"
+                                            onAction="#clearOrderItemFields"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Label fx:id="orderItemMessageLabel"
+                                           wrapText="true"
+                                           maxWidth="420"
+                                           style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                </HBox>
+                            </VBox>
+                        </bottom>
+
+                    </BorderPane>
+                </Tab>
+
+                <!-- Payments Tab -->
+                <Tab text="💳 Payments">
+                    <BorderPane style="
+                        -fx-background-color: rgba(255,255,255,0.94);
+                        -fx-background-radius: 20;
+                        -fx-padding: 20;
+                    ">
+
+                        <top>
+                            <VBox spacing="14">
+
+                                <Label text="Payment Records"
+                                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <TextField fx:id="paymentSearchField"
+                                               promptText="Search by order ID, customer, restaurant, method, status, or date"
+                                               prefWidth="520"
+                                               prefHeight="40"
+                                               style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                                    <Button text="Search"
+                                            onAction="#searchPayments"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                                    <Button text="Refresh"
+                                            onAction="#loadPayments"
+                                            prefWidth="100"
+                                            prefHeight="40"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                                </HBox>
+                            </VBox>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="paymentsTable"
+                                       prefHeight="330"
+                                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+
+                                <columns>
+                                    <TableColumn fx:id="paymentIdColumn"
+                                                 text="Payment ID"
+                                                 prefWidth="110" />
+
+                                    <TableColumn fx:id="paymentOrderIdColumn"
+                                                 text="Order ID"
+                                                 prefWidth="100" />
+
+                                    <TableColumn fx:id="paymentCustomerNameColumn"
+                                                 text="Customer"
+                                                 prefWidth="170" />
+
+                                    <TableColumn fx:id="paymentRestaurantNameColumn"
+                                                 text="Restaurant"
+                                                 prefWidth="170" />
+
+                                    <TableColumn fx:id="paymentTotalPriceColumn"
+                                                 text="Total Price"
+                                                 prefWidth="110" />
+
+                                    <TableColumn fx:id="paymentMethodColumn"
+                                                 text="Method"
+                                                 prefWidth="130" />
+
+                                    <TableColumn fx:id="paymentStatusColumn"
+                                                 text="Status"
+                                                 prefWidth="130" />
+
+                                    <TableColumn fx:id="paymentDateColumn"
+                                                 text="Payment Date"
+                                                 prefWidth="180" />
+                                </columns>
+                            </TableView>
+                        </center>
+
+                        <bottom>
+                            <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                                <GridPane hgap="14" vgap="12">
+
+                                    <Label text="Order:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="paymentOrderComboBox"
+                                              promptText="Select order"
+                                              prefWidth="330"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Method:"
+                                           GridPane.rowIndex="0"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="paymentMethodComboBox"
+                                              promptText="Select payment method"
+                                              prefWidth="260"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="0"
+                                              GridPane.columnIndex="3"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Status:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="0"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <ComboBox fx:id="paymentStatusComboBox"
+                                              promptText="Select payment status"
+                                              prefWidth="330"
+                                              prefHeight="38"
+                                              GridPane.rowIndex="1"
+                                              GridPane.columnIndex="1"
+                                              style="-fx-background-radius: 12;" />
+
+                                    <Label text="Payment Date:"
+                                           GridPane.rowIndex="1"
+                                           GridPane.columnIndex="2"
+                                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                                    <TextField fx:id="paymentDateField"
+                                               promptText="Auto NOW() when adding"
+                                               editable="false"
+                                               prefWidth="260"
+                                               prefHeight="38"
+                                               GridPane.rowIndex="1"
+                                               GridPane.columnIndex="3"
+                                               style="-fx-background-radius: 12;" />
+                                </GridPane>
+
+                                <HBox spacing="12" alignment="CENTER_LEFT">
+                                    <Button text="Add"
+                                            onAction="#addPayment"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Update"
+                                            onAction="#updatePayment"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Delete"
+                                            onAction="#deletePayment"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Button text="Clear"
+                                            onAction="#clearPaymentFields"
+                                            prefWidth="110"
+                                            prefHeight="42"
+                                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                                    <Label fx:id="paymentMessageLabel"
+                                           wrapText="true"
+                                           maxWidth="450"
+                                           style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                </HBox>
+                            </VBox>
+                        </bottom>
+
+                    </BorderPane>
+                </Tab>
+
+                <!-- Deliveries Tab -->
+<Tab text="🛵 Deliveries">
+    <BorderPane style="
+        -fx-background-color: rgba(255,255,255,0.94);
+        -fx-background-radius: 20;
+        -fx-padding: 20;
+    ">
+
+        <top>
+            <VBox spacing="14">
+
+                <Label text="Delivery Records"
+                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <TextField fx:id="deliverySearchField"
+                               promptText="Search by order, driver, customer, restaurant, or status"
+                               prefWidth="520"
+                               prefHeight="40"
+                               style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                    <Button text="Search"
+                            onAction="#searchDeliveries"
+                            prefWidth="100"
+                            prefHeight="40"
+                            style="
+                                -fx-background-color: #ff7043;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 12;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Refresh"
+                            onAction="#loadDeliveries"
+                            prefWidth="100"
+                            prefHeight="40"
+                            style="
+                                -fx-background-color: #6d4c41;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 12;
+                                -fx-cursor: hand;
+                            " />
+                </HBox>
+            </VBox>
+        </top>
+
+        <center>
+            <TableView fx:id="deliveriesTable"
+                       prefHeight="330"
+                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+
+                <columns>
+                    <TableColumn fx:id="deliveryIdColumn"
+                                 text="Delivery ID"
+                                 prefWidth="110" />
+
+                    <TableColumn fx:id="deliveryOrderIdColumn"
+                                 text="Order ID"
+                                 prefWidth="90" />
+
+                    <TableColumn fx:id="deliveryDriverIdColumn"
+                                 text="Driver ID"
+                                 prefWidth="90" />
+
+                    <TableColumn fx:id="deliveryDriverNameColumn"
+                                 text="Driver"
+                                 prefWidth="150" />
+
+                    <TableColumn fx:id="deliveryCustomerNameColumn"
+                                 text="Customer"
+                                 prefWidth="150" />
+
+                    <TableColumn fx:id="deliveryRestaurantNameColumn"
+                                 text="Restaurant"
+                                 prefWidth="160" />
+
+                    <TableColumn fx:id="deliveryStatusColumn"
+                                 text="Status"
+                                 prefWidth="120" />
+
+                    <TableColumn fx:id="deliveryEstimatedTimeColumn"
+                                 text="Estimated Time"
+                                 prefWidth="150" />
+
+                    <TableColumn fx:id="deliveryActualTimeColumn"
+                                 text="Actual Time"
+                                 prefWidth="150" />
+                </columns>
+            </TableView>
+        </center>
+
+        <bottom>
+            <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                <GridPane hgap="14" vgap="12">
+
+                    <Label text="Order:"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <ComboBox fx:id="deliveryOrderComboBox"
+                              promptText="Select order"
+                              prefWidth="300"
+                              prefHeight="38"
+                              GridPane.rowIndex="0"
+                              GridPane.columnIndex="1"
+                              style="-fx-background-radius: 12;" />
+
+                    <Label text="Driver:"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="2"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <ComboBox fx:id="deliveryDriverComboBox"
+                              promptText="Select driver"
+                              prefWidth="300"
+                              prefHeight="38"
+                              GridPane.rowIndex="0"
+                              GridPane.columnIndex="3"
+                              style="-fx-background-radius: 12;" />
+
+                    <Label text="Status:"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <ComboBox fx:id="deliveryStatusComboBox"
+                              promptText="Select delivery status"
+                              prefWidth="300"
+                              prefHeight="38"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="1"
+                              style="-fx-background-radius: 12;" />
+
+                    <Label text="Estimated:"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="2"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <TextField fx:id="deliveryEstimatedTimeField"
+                               promptText="Example: 30 minutes"
+                               prefWidth="300"
+                               prefHeight="38"
+                               GridPane.rowIndex="1"
+                               GridPane.columnIndex="3"
+                               style="-fx-background-radius: 12;" />
+
+                    <Label text="Actual:"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <TextField fx:id="deliveryActualTimeField"
+                               promptText="Example: 28 minutes / leave empty"
+                               prefWidth="300"
+                               prefHeight="38"
+                               GridPane.rowIndex="2"
+                               GridPane.columnIndex="1"
+                               style="-fx-background-radius: 12;" />
+                </GridPane>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Button text="Add"
+                            onAction="#addDelivery"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
+                                -fx-background-color: #43a047;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 14;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Update"
+                            onAction="#updateDelivery"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
+                                -fx-background-color: #fb8c00;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 14;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Delete"
+                            onAction="#deleteDelivery"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
+                                -fx-background-color: #e53935;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 14;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Clear"
+                            onAction="#clearDeliveryFields"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="
+                                -fx-background-color: #6d4c41;
+                                -fx-text-fill: white;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 14;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Label fx:id="deliveryMessageLabel"
+                           wrapText="true"
+                           maxWidth="450"
+                           style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+        </bottom>
+
+    </BorderPane>
+</Tab>
+
+                <!-- Drivers Tab -->
+<Tab text="🚗 Drivers">
+    <BorderPane style="
+        -fx-background-color: rgba(255,255,255,0.94);
+        -fx-background-radius: 20;
+        -fx-padding: 20;
+    ">
+
+        <top>
+            <VBox spacing="14">
+
+                <Label text="Driver Records"
+                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <TextField fx:id="driverSearchField"
+                               promptText="Search by name, phone, vehicle, or availability"
+                               prefWidth="480"
+                               prefHeight="40"
+                               style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                    <Button text="Search"
+                            onAction="#searchDrivers"
+                            prefWidth="100"
+                            prefHeight="40"
+                            style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                    <Button text="Refresh"
+                            onAction="#loadDrivers"
+                            prefWidth="100"
+                            prefHeight="40"
+                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                </HBox>
+            </VBox>
+        </top>
+
+        <center>
+            <TableView fx:id="driversTable"
+                       prefHeight="340"
+                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+
+                <columns>
+                    <TableColumn fx:id="driverIdColumn"
+                                 text="Driver ID"
+                                 prefWidth="120" />
+
+                    <TableColumn fx:id="driverNameColumn"
+                                 text="Name"
+                                 prefWidth="250" />
+
+                    <TableColumn fx:id="driverPhoneColumn"
+                                 text="Phone"
+                                 prefWidth="190" />
+
+                    <TableColumn fx:id="driverVehicleTypeColumn"
+                                 text="Vehicle Type"
+                                 prefWidth="220" />
+
+                    <TableColumn fx:id="driverAvailabilityColumn"
+                                 text="Availability"
+                                 prefWidth="220" />
+                </columns>
+            </TableView>
+        </center>
+
+        <bottom>
+            <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                <GridPane hgap="14" vgap="12">
+
+                    <Label text="Name:"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <TextField fx:id="driverNameField"
+                               promptText="Driver name"
+                               prefWidth="250"
+                               prefHeight="38"
+                               GridPane.rowIndex="0"
+                               GridPane.columnIndex="1"
+                               style="-fx-background-radius: 12;" />
+
+                    <Label text="Phone:"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="2"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <TextField fx:id="driverPhoneField"
+                               promptText="Phone number"
+                               prefWidth="250"
+                               prefHeight="38"
+                               GridPane.rowIndex="0"
+                               GridPane.columnIndex="3"
+                               style="-fx-background-radius: 12;" />
+
+                    <Label text="Vehicle:"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <ComboBox fx:id="driverVehicleTypeComboBox"
+                              promptText="Select vehicle type"
+                              prefWidth="250"
+                              prefHeight="38"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="1"
+                              style="-fx-background-radius: 12;" />
+
+                    <Label text="Availability:"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="2"
+                           style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                    <ComboBox fx:id="driverAvailabilityComboBox"
+                              promptText="Select availability"
+                              prefWidth="250"
+                              prefHeight="38"
+                              GridPane.rowIndex="1"
+                              GridPane.columnIndex="3"
+                              style="-fx-background-radius: 12;" />
+                </GridPane>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Button text="Add"
+                            onAction="#addDriver"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                    <Button text="Update"
+                            onAction="#updateDriver"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                    <Button text="Delete"
+                            onAction="#deleteDriver"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                    <Button text="Clear"
+                            onAction="#clearDriverFields"
+                            prefWidth="110"
+                            prefHeight="42"
+                            style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                    <Label fx:id="driverMessageLabel"
+                           wrapText="true"
+                           maxWidth="450"
+                           style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                </HBox>
+            </VBox>
+        </bottom>
+
+    </BorderPane>
+</Tab>
+<!-- Discounts Tab -->
+<!-- Discounts Tab -->
+<Tab text="🏷 Discounts">
+    <ScrollPane fitToWidth="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED"
+                style="-fx-background-color: transparent;">
+
+        <VBox spacing="14"
+              style="
+                -fx-background-color: rgba(255,255,255,0.95);
+                -fx-background-radius: 20;
+                -fx-padding: 20;
+              ">
+
+            <Label text="Discounts Management"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <TextField fx:id="discountSearchField"
+                           promptText="Search by code, description, percentage, or date"
+                           prefWidth="520"
+                           prefHeight="40"
+                           style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                <Button text="Search"
+                        onAction="#searchDiscounts"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                <Button text="Refresh"
+                        onAction="#loadDiscounts"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+            </HBox>
+
+            <TableView fx:id="discountsTable"
+                       prefHeight="150"
+                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+                <columns>
+                    <TableColumn fx:id="discountIdColumn"
+                                 text="Discount ID"
+                                 prefWidth="120" />
+
+                    <TableColumn fx:id="discountCodeColumn"
+                                 text="Code"
+                                 prefWidth="180" />
+
+                    <TableColumn fx:id="discountDescriptionColumn"
+                                 text="Description"
+                                 prefWidth="360" />
+
+                    <TableColumn fx:id="discountPercentageColumn"
+                                 text="Percentage"
+                                 prefWidth="140" />
+
+                    <TableColumn fx:id="discountStartDateColumn"
+                                 text="Start Date"
+                                 prefWidth="180" />
+
+                    <TableColumn fx:id="discountEndDateColumn"
+                                 text="End Date"
+                                 prefWidth="180" />
+                </columns>
+            </TableView>
+
+            <Label text="Order Discount Assignments"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+            <TableView fx:id="orderDiscountsTable"
+                       prefHeight="130"
+                       style="-fx-font-size: 13px; -fx-background-radius: 14;">
+                <columns>
+                    <TableColumn fx:id="orderDiscountOrderIdColumn"
+                                 text="Order ID"
+                                 prefWidth="110" />
+
+                    <TableColumn fx:id="orderDiscountDiscountIdColumn"
+                                 text="Discount ID"
+                                 prefWidth="120" />
+
+                    <TableColumn fx:id="orderDiscountCodeColumn"
+                                 text="Code"
+                                 prefWidth="170" />
+
+                    <TableColumn fx:id="orderDiscountPercentageColumn"
+                                 text="Percentage"
+                                 prefWidth="140" />
+
+                    <TableColumn fx:id="orderDiscountCustomerColumn"
+                                 text="Customer"
+                                 prefWidth="230" />
+
+                    <TableColumn fx:id="orderDiscountRestaurantColumn"
+                                 text="Restaurant"
+                                 prefWidth="230" />
+
+                    <TableColumn fx:id="orderDiscountTotalColumn"
+                                 text="Order Total"
+                                 prefWidth="150" />
+                </columns>
+            </TableView>
+
+            <GridPane hgap="16" vgap="12">
+
+                <Label text="Code:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <TextField fx:id="discountCodeField"
+                           promptText="Example: SAVE10"
+                           prefWidth="270"
+                           prefHeight="38"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"
+                           style="-fx-background-radius: 12;" />
+
+                <Label text="Percentage:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <TextField fx:id="discountPercentageField"
+                           promptText="Example: 10"
+                           prefWidth="270"
+                           prefHeight="38"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="3"
+                           style="-fx-background-radius: 12;" />
+
+                <Label text="Description:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <TextField fx:id="discountDescriptionField"
+                           promptText="Discount description"
+                           prefWidth="270"
+                           prefHeight="38"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"
+                           style="-fx-background-radius: 12;" />
+
+                <Label text="Start Date:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <DatePicker fx:id="discountStartDateField"
+                            promptText="Start date"
+                            prefWidth="270"
+                            prefHeight="38"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="3"
+                            style="-fx-background-radius: 12;" />
+
+                <Label text="End Date:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <DatePicker fx:id="discountEndDateField"
+                            promptText="Expiration date"
+                            prefWidth="270"
+                            prefHeight="38"
+                            GridPane.rowIndex="2"
+                            GridPane.columnIndex="1"
+                            style="-fx-background-radius: 12;" />
+
+                <Label text="Order:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="2"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <ComboBox fx:id="orderDiscountOrderComboBox"
+                          promptText="Select order"
+                          prefWidth="270"
+                          prefHeight="38"
+                          GridPane.rowIndex="2"
+                          GridPane.columnIndex="3"
+                          style="-fx-background-radius: 12;" />
+
+                <Label text="Discount:"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"
+                       style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                <ComboBox fx:id="orderDiscountDiscountComboBox"
+                          promptText="Select discount"
+                          prefWidth="270"
+                          prefHeight="38"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1"
+                          style="-fx-background-radius: 12;" />
+
+            </GridPane>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+
+                <Button text="Add Discount"
+                        onAction="#addDiscount"
+                        prefWidth="135"
+                        prefHeight="42"
+                        style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Button text="Update"
+                        onAction="#updateDiscount"
+                        prefWidth="110"
+                        prefHeight="42"
+                        style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Button text="Delete"
+                        onAction="#deleteDiscount"
+                        prefWidth="110"
+                        prefHeight="42"
+                        style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Button text="Assign to Order"
+                        onAction="#assignDiscountToOrder"
+                        prefWidth="155"
+                        prefHeight="42"
+                        style="-fx-background-color: #5c6bc0; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Button text="Remove Assignment"
+                        onAction="#removeOrderDiscount"
+                        prefWidth="170"
+                        prefHeight="42"
+                        style="-fx-background-color: #8e24aa; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Button text="Clear"
+                        onAction="#clearDiscountFields"
+                        prefWidth="110"
+                        prefHeight="42"
+                        style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                <Label fx:id="discountMessageLabel"
+                       wrapText="true"
+                       maxWidth="350"
+                       style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            </HBox>
+
+        </VBox>
+    </ScrollPane>
+</Tab>
+
+               
+
+            </TabPane>
+        </center>
+    </BorderPane>
+</StackPane>

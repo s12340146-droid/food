@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.AdminDashboardController"
+           prefWidth="1200"
+           prefHeight="750">
+
+    <!-- Background Image -->
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <!-- Dark transparent overlay -->
+    <AnchorPane style="-fx-background-color: rgba(0,0,0,0.45);" />
+
+    <!-- Main Content -->
+    <BorderPane prefWidth="1200"
+                prefHeight="750"
+                style="-fx-padding: 22;">
+
+        <!-- TOP BAR -->
+        <top>
+            <HBox alignment="CENTER_LEFT"
+                  spacing="18"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.14);
+                    -fx-background-radius: 22;
+                    -fx-padding: 18 24 18 24;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+                  ">
+
+                <VBox spacing="4">
+                    <Label text="Admin Dashboard"
+                           style="
+                            -fx-font-size: 30px;
+                            -fx-font-weight: bold;
+                            -fx-text-fill: white;
+                           " />
+
+                    <Label text="Food Delivery Management System"
+                           style="
+                            -fx-font-size: 14px;
+                            -fx-text-fill: #fbe9e7;
+                           " />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <VBox alignment="CENTER_RIGHT" spacing="4">
+                    <Label fx:id="dateLabel"
+                           text="Date"
+                           style="
+                            -fx-font-size: 15px;
+                            -fx-font-weight: bold;
+                            -fx-text-fill: white;
+                           " />
+
+                    <Label fx:id="timeLabel"
+                           text="Time"
+                           style="
+                            -fx-font-size: 14px;
+                            -fx-text-fill: #ffe0b2;
+                           " />
+                </VBox>
+
+                <Button text="Logout"
+                        onAction="#logout"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="
+                            -fx-background-color: #ff7043;
+                            -fx-text-fill: white;
+                            -fx-font-size: 14px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+            </HBox>
+        </top>
+
+        <!-- LEFT SIDEBAR -->
+        <left>
+            <VBox spacing="16"
+                  prefWidth="255"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.15);
+                    -fx-background-radius: 22;
+                    -fx-padding: 25;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 15, 0, 0, 5);
+                  "
+                  BorderPane.alignment="CENTER">
+
+                <Label text="Admin Panel"
+                       style="
+                        -fx-font-size: 24px;
+                        -fx-font-weight: bold;
+                        -fx-text-fill: white;
+                       " />
+
+                <Label text="Quick Navigation"
+                       style="
+                        -fx-font-size: 13px;
+                        -fx-text-fill: #fbe9e7;
+                       " />
+
+                <Separator style="-fx-background-color: white;" />
+
+                <Button text="Dashboard"
+                        onAction="#showDashboard"
+                        prefWidth="200"
+                        prefHeight="45"
+                        style="
+                            -fx-background-color: rgba(255,255,255,0.90);
+                            -fx-text-fill: #3e2723;
+                            -fx-font-size: 15px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+
+                <Button text="Manage Customers"
+                        onAction="#manageCustomers"
+                        prefWidth="200"
+                        prefHeight="45"
+                        style="
+                            -fx-background-color: rgba(255,255,255,0.90);
+                            -fx-text-fill: #3e2723;
+                            -fx-font-size: 15px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+
+                <Button text="Manage Restaurants"
+                        onAction="#manageRestaurants"
+                        prefWidth="200"
+                        prefHeight="45"
+                        style="
+                            -fx-background-color: rgba(255,255,255,0.90);
+                            -fx-text-fill: #3e2723;
+                            -fx-font-size: 15px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+
+                
+
+                <Button text="Manage Orders"
+                        onAction="#manageOrders"
+                        prefWidth="200"
+                        prefHeight="45"
+                        style="
+                            -fx-background-color: rgba(255,255,255,0.90);
+                            -fx-text-fill: #3e2723;
+                            -fx-font-size: 15px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+
+                <VBox VBox.vgrow="ALWAYS" />
+
+                <Label text="System Status: Active"
+                       style="
+                        -fx-font-size: 13px;
+                        -fx-text-fill: #c8e6c9;
+                        -fx-font-weight: bold;
+                       " />
+            </VBox>
+        </left>
+
+        <!-- CENTER -->
+        <center>
+            <VBox alignment="TOP_CENTER"
+                  spacing="24"
+                  style="-fx-padding: 10 0 0 25;">
+
+                <!-- Welcome Box -->
+                <VBox alignment="CENTER_LEFT"
+                      spacing="12"
+                      prefWidth="820"
+                      maxWidth="820"
+                      style="
+                        -fx-background-color: rgba(255,255,255,0.16);
+                        -fx-background-radius: 24;
+                        -fx-padding: 28;
+                        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 15, 0, 0, 5);
+                      ">
+
+                    <Label text="Welcome Admin"
+                           style="
+                            -fx-font-size: 36px;
+                            -fx-font-weight: bold;
+                            -fx-text-fill: white;
+                           " />
+
+                    <Label text="Control and manage all parts of the Food Delivery Database System from one place."
+                           wrapText="true"
+                           style="
+                            -fx-font-size: 16px;
+                            -fx-text-fill: #fbe9e7;
+                           " />
+                </VBox>
+
+                <!-- Cards -->
+                <GridPane hgap="20"
+                          vgap="20"
+                          alignment="CENTER">
+
+                    <Button text="Manage Customers&#10;Add, edit, and delete customer records"
+                            onAction="#manageCustomers"
+                            wrapText="true"
+                            prefWidth="300"
+                            prefHeight="120"
+                            GridPane.rowIndex="0"
+                            GridPane.columnIndex="0"
+                            style="
+                                -fx-background-color: rgba(255,255,255,0.92);
+                                -fx-text-fill: #3e2723;
+                                -fx-font-size: 17px;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 22;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Manage Restaurants&#10;Control restaurant information and data"
+                            onAction="#manageRestaurants"
+                            wrapText="true"
+                            prefWidth="300"
+                            prefHeight="120"
+                            GridPane.rowIndex="0"
+                            GridPane.columnIndex="1"
+                            style="
+                                -fx-background-color: rgba(255,255,255,0.92);
+                                -fx-text-fill: #3e2723;
+                                -fx-font-size: 17px;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 22;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Manage Menu Items&#10;Update meals, prices, and menu details"
+                            onAction="#manageMenuItems"
+                            wrapText="true"
+                            prefWidth="300"
+                            prefHeight="120"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="0"
+                            style="
+                                -fx-background-color: rgba(255,255,255,0.92);
+                                -fx-text-fill: #3e2723;
+                                -fx-font-size: 17px;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 22;
+                                -fx-cursor: hand;
+                            " />
+
+                    <Button text="Manage Orders&#10;Track and manage customer orders"
+                            onAction="#manageOrders"
+                            wrapText="true"
+                            prefWidth="300"
+                            prefHeight="120"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="1"
+                            style="
+                                -fx-background-color: rgba(255,255,255,0.92);
+                                -fx-text-fill: #3e2723;
+                                -fx-font-size: 17px;
+                                -fx-font-weight: bold;
+                                -fx-background-radius: 22;
+                                -fx-cursor: hand;
+                            " />
+                </GridPane>
+
+            </VBox>
+        </center>
+
+    </BorderPane>
+
+</StackPane>

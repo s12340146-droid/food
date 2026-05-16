@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.CustomerDashboardController"
+           prefWidth="1200"
+           prefHeight="750"
+           stylesheets="@../styles/customers-module.css">
+
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <AnchorPane style="-fx-background-color: rgba(0,0,0,0.48);" />
+
+    <BorderPane prefWidth="1200"
+                prefHeight="750"
+                style="-fx-padding: 26;">
+
+        <top>
+            <HBox alignment="CENTER_LEFT"
+                  spacing="18"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.16);
+                    -fx-background-radius: 24;
+                    -fx-padding: 20 28 20 28;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+                  ">
+
+                <VBox spacing="5">
+                    <Label text="Customer Dashboard"
+                           style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Label fx:id="welcomeLabel"
+                           text="Welcome"
+                           style="-fx-font-size: 15px; -fx-text-fill: #fbe9e7;" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button text="Logout"
+                        onAction="#logout"
+                        prefWidth="120"
+                        prefHeight="44"
+                        style="
+                            -fx-background-color: #fff3e0;
+                            -fx-text-fill: #e65100;
+                            -fx-font-size: 14px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+            </HBox>
+        </top>
+
+        <center>
+            <HBox spacing="28"
+                  alignment="CENTER"
+                  style="-fx-padding: 38 0 0 0;">
+
+                <VBox spacing="18"
+                      prefWidth="370"
+                      style="
+                        -fx-background-color: rgba(255,255,255,0.18);
+                        -fx-background-radius: 26;
+                        -fx-padding: 30;
+                        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.32), 16, 0, 0, 5);
+                      ">
+
+                    <Label text="Quick Navigation"
+                           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Separator />
+
+                    <Button text="Browse Restaurants"
+                            onAction="#openBrowseRestaurants"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                    <Button text="My Cart"
+                            onAction="#openMyCart"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                    <Button text="My Orders"
+                            onAction="#openMyOrders"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                    <Button text="My Addresses"
+                            onAction="#openMyAddresses"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                    <Button text="My Notifications"
+                            onAction="#openMyNotifications"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                    <Button text="My Reviews"
+                            onAction="#openMyReviews"
+                            prefWidth="310"
+                            prefHeight="58"
+                            style="-fx-background-color: #fff8e1; -fx-text-fill: #3e2723; -fx-font-size: 17px; -fx-font-weight: bold; -fx-background-radius: 18; -fx-cursor: hand;" />
+
+                </VBox>
+
+                <VBox spacing="18"
+                      alignment="CENTER"
+                      prefWidth="640"
+                      prefHeight="470"
+                      style="
+                        -fx-background-color: rgba(255,255,255,0.20);
+                        -fx-background-radius: 28;
+                        -fx-padding: 35;
+                        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 16, 0, 0, 5);
+                      ">
+
+                    <Label text="Welcome to Food Delivery"
+                           style="-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Label text="Browse restaurants, add meals to your cart, track orders, and manage your account."
+                           wrapText="true"
+                           maxWidth="520"
+                           style="-fx-font-size: 17px; -fx-text-fill: #fff3e0; -fx-text-alignment: center;" />
+
+                    <Label text="Customer Area"
+                           style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ffe0b2;" />
+
+                </VBox>
+
+            </HBox>
+        </center>
+
+    </BorderPane>
+</StackPane>

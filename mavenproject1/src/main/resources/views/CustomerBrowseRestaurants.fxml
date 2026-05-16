@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.CustomerBrowseRestaurantsController"
+           prefWidth="1200"
+           prefHeight="750"
+           stylesheets="@../styles/customers-module.css">
+
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <AnchorPane style="-fx-background-color: rgba(0,0,0,0.48);" />
+
+    <BorderPane prefWidth="1200"
+                prefHeight="750"
+                style="-fx-padding: 24;">
+
+        <top>
+            <HBox alignment="CENTER_LEFT"
+                  spacing="16"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.16);
+                    -fx-background-radius: 22;
+                    -fx-padding: 18 24 18 24;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+                  ">
+
+                <VBox spacing="4">
+                    <Label text="Browse Restaurants"
+                           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Label text="View available meals and add items to your cart"
+                           style="-fx-font-size: 14px; -fx-text-fill: #fbe9e7;" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button text="Back"
+                        onAction="#backToDashboard"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="
+                            -fx-background-color: #fff3e0;
+                            -fx-text-fill: #e65100;
+                            -fx-font-size: 14px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+            </HBox>
+        </top>
+
+        <center>
+            <BorderPane style="
+                -fx-background-color: rgba(255,255,255,0.95);
+                -fx-background-radius: 20;
+                -fx-padding: 20;
+                -fx-margin: 20 0 0 0;
+            ">
+
+                <top>
+                    <VBox spacing="14">
+                        <Label text="Available Menu Items"
+                               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <TextField fx:id="searchField"
+                                       promptText="Search by item, restaurant, category, or description"
+                                       prefWidth="520"
+                                       prefHeight="40"
+                                       style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                            <Button text="Search"
+                                    onAction="#searchMenuItems"
+                                    prefWidth="110"
+                                    prefHeight="40"
+                                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                            <Button text="Refresh"
+                                    onAction="#loadMenuItems"
+                                    prefWidth="110"
+                                    prefHeight="40"
+                                    style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                        </HBox>
+                    </VBox>
+                </top>
+
+                <center>
+                    <TableView fx:id="menuItemsTable"
+                               prefHeight="390"
+                               style="-fx-font-size: 13px; -fx-background-radius: 14;">
+                        <columns>
+                            <TableColumn fx:id="itemIdColumn"
+                                         text="Item ID"
+                                         prefWidth="90" />
+
+                            <TableColumn fx:id="itemNameColumn"
+                                         text="Item Name"
+                                         prefWidth="190" />
+
+                            <TableColumn fx:id="descriptionColumn"
+                                         text="Description"
+                                         prefWidth="260" />
+
+                            <TableColumn fx:id="priceColumn"
+                                         text="Price"
+                                         prefWidth="100" />
+
+                            <TableColumn fx:id="restaurantColumn"
+                                         text="Restaurant"
+                                         prefWidth="190" />
+
+                            <TableColumn fx:id="categoryColumn"
+                                         text="Category"
+                                         prefWidth="150" />
+                        </columns>
+                    </TableView>
+                </center>
+
+                <bottom>
+                    <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                        <GridPane hgap="14" vgap="12">
+
+                            <Label text="Selected Item:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                            <TextField fx:id="selectedItemField"
+                                       editable="false"
+                                       promptText="Select item from table"
+                                       prefWidth="330"
+                                       prefHeight="38"
+                                       GridPane.rowIndex="0"
+                                       GridPane.columnIndex="1"
+                                       style="-fx-background-radius: 12;" />
+
+                            <Label text="Quantity:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="2"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                            <TextField fx:id="quantityField"
+                                       promptText="Quantity"
+                                       prefWidth="220"
+                                       prefHeight="38"
+                                       GridPane.rowIndex="0"
+                                       GridPane.columnIndex="3"
+                                       style="-fx-background-radius: 12;" />
+                        </GridPane>
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Button text="Add To Cart"
+                                    onAction="#addToCart"
+                                    prefWidth="140"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Button text="Clear"
+                                    onAction="#clearFields"
+                                    prefWidth="110"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Label fx:id="messageLabel"
+                                   wrapText="true"
+                                   maxWidth="600"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                        </HBox>
+                    </VBox>
+                </bottom>
+
+            </BorderPane>
+        </center>
+
+    </BorderPane>
+</StackPane>

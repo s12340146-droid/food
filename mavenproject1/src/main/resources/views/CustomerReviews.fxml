@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.CustomerReviewsController"
+           prefWidth="1200"
+           prefHeight="750"
+           stylesheets="@../styles/customers-module.css">
+
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <AnchorPane style="-fx-background-color: rgba(0,0,0,0.48);" />
+
+    <BorderPane prefWidth="1200"
+                prefHeight="750"
+                style="-fx-padding: 24;">
+
+        <top>
+            <HBox alignment="CENTER_LEFT"
+                  spacing="16"
+                  style="
+                    -fx-background-color: rgba(255,255,255,0.16);
+                    -fx-background-radius: 22;
+                    -fx-padding: 18 24 18 24;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 15, 0, 0, 4);
+                  ">
+
+                <VBox spacing="4">
+                    <Label text="My Reviews"
+                           style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;" />
+
+                    <Label text="View and manage your restaurant reviews"
+                           style="-fx-font-size: 14px; -fx-text-fill: #fbe9e7;" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button text="Back"
+                        onAction="#backToDashboard"
+                        prefWidth="110"
+                        prefHeight="40"
+                        style="
+                            -fx-background-color: #fff3e0;
+                            -fx-text-fill: #e65100;
+                            -fx-font-size: 14px;
+                            -fx-font-weight: bold;
+                            -fx-background-radius: 14;
+                            -fx-cursor: hand;
+                        " />
+            </HBox>
+        </top>
+
+        <center>
+            <BorderPane style="
+                -fx-background-color: rgba(255,255,255,0.95);
+                -fx-background-radius: 20;
+                -fx-padding: 20;
+            ">
+
+                <top>
+                    <VBox spacing="14">
+                        <Label text="Review Records"
+                               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <TextField fx:id="searchField"
+                                       promptText="Search by restaurant, rating, comment, or date"
+                                       prefWidth="520"
+                                       prefHeight="40"
+                                       style="-fx-background-radius: 12; -fx-font-size: 14px;" />
+
+                            <Button text="Search"
+                                    onAction="#searchReviews"
+                                    prefWidth="110"
+                                    prefHeight="40"
+                                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+
+                            <Button text="Refresh"
+                                    onAction="#loadReviews"
+                                    prefWidth="110"
+                                    prefHeight="40"
+                                    style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" />
+                        </HBox>
+                    </VBox>
+                </top>
+
+                <center>
+                    <TableView fx:id="reviewsTable"
+                               prefHeight="390"
+                               style="-fx-font-size: 13px; -fx-background-radius: 14;">
+
+                        <columns>
+                            <TableColumn fx:id="reviewIdColumn"
+                                         text="Review ID"
+                                         prefWidth="110" />
+
+                            <TableColumn fx:id="restaurantIdColumn"
+                                         text="Restaurant ID"
+                                         prefWidth="120" />
+
+                            <TableColumn fx:id="restaurantNameColumn"
+                                         text="Restaurant"
+                                         prefWidth="250" />
+
+                            <TableColumn fx:id="ratingColumn"
+                                         text="Rating"
+                                         prefWidth="100" />
+
+                            <TableColumn fx:id="commentColumn"
+                                         text="Comment"
+                                         prefWidth="370" />
+
+                            <TableColumn fx:id="dateColumn"
+                                         text="Date"
+                                         prefWidth="180" />
+                        </columns>
+                    </TableView>
+                </center>
+
+                <bottom>
+                    <VBox spacing="14" style="-fx-padding: 15 0 0 0;">
+
+                        <GridPane hgap="14" vgap="12">
+
+                            <Label text="Restaurant:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="0"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                            <ComboBox fx:id="restaurantComboBox"
+                                      promptText="Select restaurant"
+                                      prefWidth="320"
+                                      prefHeight="38"
+                                      GridPane.rowIndex="0"
+                                      GridPane.columnIndex="1"
+                                      style="-fx-background-radius: 12;" />
+
+                            <Label text="Rating:"
+                                   GridPane.rowIndex="0"
+                                   GridPane.columnIndex="2"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                            <ComboBox fx:id="ratingComboBox"
+                                      promptText="Select rating"
+                                      prefWidth="220"
+                                      prefHeight="38"
+                                      GridPane.rowIndex="0"
+                                      GridPane.columnIndex="3"
+                                      style="-fx-background-radius: 12;" />
+
+                            <Label text="Comment:"
+                                   GridPane.rowIndex="1"
+                                   GridPane.columnIndex="0"
+                                   style="-fx-font-weight: bold; -fx-text-fill: #3e2723;" />
+
+                            <TextArea fx:id="commentArea"
+                                      promptText="Write your review"
+                                      prefWidth="650"
+                                      prefHeight="80"
+                                      wrapText="true"
+                                      GridPane.rowIndex="1"
+                                      GridPane.columnIndex="1"
+                                      GridPane.columnSpan="3"
+                                      style="-fx-background-radius: 12;" />
+
+                        </GridPane>
+
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+
+                            <Button text="Add Review"
+                                    onAction="#addReview"
+                                    prefWidth="130"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #43a047; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Button text="Update"
+                                    onAction="#updateReview"
+                                    prefWidth="110"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #fb8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Button text="Delete"
+                                    onAction="#deleteReview"
+                                    prefWidth="110"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #e53935; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Button text="Clear"
+                                    onAction="#clearFields"
+                                    prefWidth="110"
+                                    prefHeight="42"
+                                    style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 14; -fx-cursor: hand;" />
+
+                            <Label fx:id="messageLabel"
+                                   wrapText="true"
+                                   maxWidth="570"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                        </HBox>
+
+                    </VBox>
+                </bottom>
+
+            </BorderPane>
+        </center>
+
+    </BorderPane>
+</StackPane>

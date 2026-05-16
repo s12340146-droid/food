@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.LoginController"
+           prefWidth="1200"
+           prefHeight="750">
+
+    <ImageView fitWidth="1200"
+               fitHeight="750"
+               preserveRatio="false">
+        <image>
+            <Image url="@../images/background.png"/>
+        </image>
+    </ImageView>
+
+    <HBox alignment="CENTER_RIGHT"
+          prefWidth="1200"
+          prefHeight="750"
+          style="-fx-padding: 0 120 0 0;">
+
+        <VBox alignment="CENTER"
+              spacing="22"
+              prefWidth="460"
+              maxWidth="460"
+              style="
+                -fx-background-color: rgba(255,255,255,0.94);
+                -fx-background-radius: 28;
+                -fx-padding: 48;
+                -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.28), 24, 0, 0, 10);
+              ">
+
+            <Label text="Welcome Back"
+                   style="
+                    -fx-font-size: 38px;
+                    -fx-font-weight: bold;
+                    -fx-text-fill: #3e2723;
+                   " />
+
+            <Label text="Login to Food Delivery System"
+                   style="
+                    -fx-font-size: 17px;
+                    -fx-text-fill: #6d4c41;
+                   " />
+
+            <TextField fx:id="usernameField"
+                       promptText="Username"
+                       prefWidth="360"
+                       prefHeight="52"
+                       style="
+                        -fx-background-radius: 16;
+                        -fx-border-radius: 16;
+                        -fx-font-size: 15px;
+                        -fx-padding: 0 15 0 15;
+                       " />
+
+            <PasswordField fx:id="passwordField"
+                           promptText="Password"
+                           prefWidth="360"
+                           prefHeight="52"
+                           style="
+                            -fx-background-radius: 16;
+                            -fx-border-radius: 16;
+                            -fx-font-size: 15px;
+                            -fx-padding: 0 15 0 15;
+                           " />
+
+            <Button text="Login"
+                    onAction="#login"
+                    prefWidth="360"
+                    prefHeight="52"
+                    style="
+                        -fx-background-color: #ff7043;
+                        -fx-text-fill: white;
+                        -fx-font-size: 17px;
+                        -fx-font-weight: bold;
+                        -fx-background-radius: 16;
+                        -fx-cursor: hand;
+                    " />
+
+            <Button text="Create New Account"
+                    onAction="#goToRegister"
+                    prefWidth="360"
+                    prefHeight="48"
+                    style="
+                        -fx-background-color: #fff3e0;
+                        -fx-text-fill: #e65100;
+                        -fx-font-size: 15px;
+                        -fx-font-weight: bold;
+                        -fx-background-radius: 16;
+                        -fx-cursor: hand;
+                    " />
+
+            <Label fx:id="messageLabel"
+                   wrapText="true"
+                   maxWidth="360"
+                   style="
+                    -fx-text-fill: red;
+                    -fx-font-size: 14px;
+                   " />
+
+        </VBox>
+    </HBox>
+
+</StackPane>
